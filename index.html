@@ -14,21 +14,32 @@
     </style>
   </head>
   <body>
+    Cipher key: <input id="cipher" autocomplete="off" />
+    Decipher key: <input id="decipher" autocomplete="off" />
+
     <ul id="messages"></ul>
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
+
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="http://cryptojs.altervista.org/api/functions_cryptography.js"></script>
     <script>
+      var Crypt = new Crypt();
       var socket = io();
+
       $('form').submit(function(){
-        socket.emit('chat message', $('#m').val());
+
+        var ciphertext = Crypt.AES.encrypt($('#m').val(), $('#cipher').val());
+        socket.emit('chat message', ciphertext);
         $('#m').val('');
         return false;
       });
+
       socket.on('chat message', function(msg){
-        $('#messages').append($('<li>').text(msg));
+        var plaintext  = Crypt.AES.decrypt(msg, $('#decipher').val());
+        $('#messages').append($('<li>').text(plaintext));
       });
     </script>
   </body>
