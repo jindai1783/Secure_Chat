@@ -1,11 +1,12 @@
 # Secure Chat
 
-This repository demonstrates how the socket.io can be implemented with the client side encryption.
+## Introduction
+
+This repository demonstrates how the socket.io can be implemented with the client side encryption in a spiky fashion.
 
 ## Try It
 
 ```
-git clone https://github.com/jindai1783/Secure_Chat
 npm install
 node index.js
 ```
